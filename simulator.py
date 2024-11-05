@@ -55,7 +55,7 @@ def Game():
         h2_health, h2_strength, h2_defence = hero2.getStats()
 
         # An array to store the previous move E.g. Attack or Defend
-        previous_move = [""]
+        previous_move = ["",""]
 
         while not_dead:
 
@@ -70,7 +70,7 @@ def Game():
 
                     # If Hero2 defended on their last go, we must reduce to damadge taken
                     if previous_move:
-                        if previous_move[0] == "defend":
+                        if previous_move[1] == "defend":
                             h2_health = h2_health - ((h1_strength//2) - (h2_defence//2))
 
                             # Check if the hero is dead
@@ -83,26 +83,26 @@ def Game():
                             # If the hero is not dead, display a message to the user of the new Hero heal
                             else:
                                 print(f"\n{h2_name} reduced an attack from {h1_name} by defending {h2_defence//2} hp, and is now on {h2_health} hp (-{h1_strength//2 - h2_defence//2} hp)")
-                                previous_move.clear()
+                                previous_move[1] = ""
                             
 
-                    # Otherwise, the Hero can't block any damadge
-                    else:
-                        h2_health = h2_health - (h1_strength // 2)
-                        # Check if the hero is dead
-                        if h2_health <= 0:
-                            print(f"{h1_name} defeated {h2_name} with that attack!")
-                            print("\n")
-                            print(f"{h1_name} wins!!".center(50))
-                            exit()
-
+                        # Otherwise, the Hero can't block any damadge
                         else:
-                            print(f"\n{h2_name} was attacked by {h1_name} and is now on {h2_health} hp (-{h1_strength//2} hp)")
-                    previous_move.clear()
+                            h2_health = h2_health - (h1_strength // 2)
+                            # Check if the hero is dead
+                            if h2_health <= 0:
+                                print(f"{h1_name} defeated {h2_name} with that attack!")
+                                print("\n")
+                                print(f"{h1_name} wins!!".center(50))
+                                exit()
+
+                            else:
+                                print(f"\n{h2_name} was attacked by {h1_name} and is now on {h2_health} hp (-{h1_strength//2} hp)")
+
+
                 else:
                     print(f"\nYou will block {h1_defence//2} hp from your next incoming attack!")
-                    previous_move.clear()
-                    previous_move.append("defend")
+                    previous_move[1] = "defend"
                     
                 current_move += 1
 
@@ -114,10 +114,9 @@ def Game():
                 hero_move = get_move()
 
                 if hero_move == "attack":
-                    
                     if previous_move:
                         # If Hero1 defended on their last go, we must reduce to damadge taken
-                        if previous_move[0] == "defend":
+                        if previous_move[1] == "defend":
                             h1_health = h1_health - ((h2_strength//2) - (h1_defence//2))
 
                             # Check if the hero is dead
@@ -130,25 +129,25 @@ def Game():
                             # If the hero is not dead, display a message to the user of the new Hero health
                             else:
                                 print(f"\n{h1_name} reduced an attack from {h2_name} by defending {h1_defence//2} hp, and is now on {h1_health} hp (-{h2_strength//2 - h1_defence//2} hp)")
-                                previous_move.clear()
-                    # Otherwise, the Hero can't block any damadge
-                    else:
-                        h1_health = h1_health - (h2_strength // 2)
-                        
-                        # Check if the hero is dead
-                        if h1_health <= 0:
-                            print(f"{h2_name} defeated {h1_name} with that attack!")
-                            print("\n")
-                            print(f"{h2_name} wins!!".center(50))
-                            exit()
-
+                                previous_move[1] = ""
+                        # Otherwise, the Hero can't block any damadge
                         else:
-                            print(f"\n{h1_name} was attacked by {h2_name} and is now on {h1_health} hp (-{h2_strength//2} hp)")
-                        previous_move.clear()
+                            h1_health = h1_health - (h2_strength // 2)
+                            
+                            # Check if the hero is dead
+                            if h1_health <= 0:
+                                print(f"{h2_name} defeated {h1_name} with that attack!")
+                                print("\n")
+                                print(f"{h2_name} wins!!".center(50))
+                                exit()
+
+                            else:
+                                print(f"\n{h1_name} was attacked by {h2_name} and is now on {h1_health} hp (-{h2_strength//2} hp)")
+
+
                 else:
                     print(f"\nYou will block {h2_defence//2} hp from your next incoming attack!")
-                    previous_move.clear()
-                    previous_move.append("defend")
+                    previous_move[1] = "defend"
                     
                 current_move += 1
    
